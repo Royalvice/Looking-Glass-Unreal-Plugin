@@ -31,6 +31,7 @@ THIRD_PARTY_INCLUDES_END
 #undef CaptureStackBackTrace
 #undef MemoryBarrier
 #undef GetClassName
+#undef max
 
 #define BRIDGE_VERSION_MAJOR	2
 #define BRIDGE_VERSION_MINOR	4
