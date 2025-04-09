@@ -1,0 +1,19 @@
+{	
+	"FriendlyName": "SDL",
+	"FileVersion" : 3,
+	"Version" : 1,
+	"VersionName": "1.0",
+	"CreatedBy": "Looking Glass Factory",
+	"CreatedByURL": "https://lookingglassfactory.com",
+	"Description": "SDL lib",
+	"EnabledByDefault" : true,
+	"Modules": 
+	[
+		{
+			"Name": "SDL",
+			"Type": "Runtime",
+			"WhitelistPlatforms": [ "Win64" ],
+			"LoadingPhase": "PostConfigInit"
+		}
+	]
+}
