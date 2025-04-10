@@ -2,22 +2,19 @@
 
 ## Obtaining the source code
 
-Actually, this is the standard procedure suitable for any Github repository. If you already did that before, it's unlikely that you'll find anything new in this section.
-
-`git clone --recursive git@github.com:Looking-Glass/UnrealSDK.git`
+`git clone --recursive git@github.com:Looking-Glass/Unreal.git`
 
 For older git version
 
-- `git clone git@github.com:Looking-Glass/UnrealSDK.git`
-- `cd UnrealSDK`
-- `git submodule init`
-- `git submodule update`
+- `git clone git@github.com:Looking-Glass/Unreal.git`
+- `cd Unreal`
 
 Alternatively you may get the snapshot of the repository using downloading of zip file from Github instead of using `git clone`.
 
 ## How to build the plugin from the source code
 
-- Pre-requisites: you should have Visual Studio 2019 installed.
+- Pre-requisites: you should have Visual Studio 2022 installed.
+- Unreal Engine 5.5 requires MSVC v143 (14.38 - 17.8) working with Unreal Engine with another MSVC version will cause the engine to fail to compile.
 - Download the project from Github (see above).
 - Find the UnrealSDK.uproject file in the root folder of repository.
 - If you have multiple Unreal engine versions installed, right click on this file, select "Switch unreal engine version" option and select the one which you want to use with this plugin.
@@ -28,12 +25,12 @@ Alternatively you may get the snapshot of the repository using downloading of zi
 ## How to use pre-built version of the plugin
 
 - As a pre-requisite, you should have an existing project for Unreal engine.
-- Download the latest release for your Unreal engine version [here](https://github.com/Looking-Glass/UnrealPlugin/releases)
+- Download the latest release for your Unreal engine version [here](https://github.com/Looking-Glass/Unreal/releases)
 - Create Plugins folder in your project (it may already exist if you have any project-level plugins).
-- Create LookingGlass folder inside of Plugins. Actual folder name doesn't matter.
+- Create a LookingGlass folder inside of Plugins. Actual folder name doesn't matter.
 - Unzip the archive file with precompiled plugin into this folder.
-- Now you may run your project. The LookingGlass plugin should be automatically enabled, unless if was explicitly disabled before, so there's no needs to enable it, as the engine always using all of the project-space plugins. You may see the "LookingGlass" button on the editor's toolbar.
-- If the button didn't appear, go to the menu, Edit | Plugins | Project | 3D Screen | LookingGlass, and check the "Enabled" option. The engine will prompt to restart the editor after that.
+- Now you may run your project. The LookingGlass plugin should be automatically enabled, unless if it was explicitly disabled before. You may see the "LookingGlass" button on the editor's toolbar.
+- If the button didn't appear, go to the menu, Edit | Plugins | Project | Light Field Display | LookingGlass, and check the "Enabled" option. The engine will prompt to restart the editor after that.
 
 ## How to package the plugin
 
