@@ -1,5 +1,11 @@
 # Looking Glass Plugin for Unreal Engine
 
+The Looking Glass Plugin for Unreal Engine allows you to create high quality holographic still images and videos for Looking Glass displays. 
+
+It is not intended for realtime content generation at this time. 
+
+For more information on how to use the plugin, check out our [docs site](https://docs.lookingglassfactory.com/developer-tools/index-2)!
+
 ## Obtaining the source code
 
 `git clone git@github.com:Looking-Glass/Unreal.git`
@@ -7,26 +13,34 @@
 
 Alternatively you may get the snapshot of the repository using downloading of zip file from Github instead of using `git clone`.
 
+![Section Divider](https://github.com/looking-glass/unreal/docs/docs-divider-gradient-stroke.png)
+
 ## How to build the plugin from the source code
 
-- Pre-requisites: you should have Visual Studio 2022 installed.
-- Unreal Engine 5.5 requires MSVC v143 (14.38 - 17.8). Working with Unreal Engine with another MSVC version will cause the engine to fail to compile.
+- Pre-requisites: 
+- Looking Glass Bridge 2.5.1 or higher
+- Visual Studio 2022
+- **Unreal Engine 5.5 requires MSVC v143 (14.38 - 17.8). Working with Unreal Engine with another MSVC version will cause the engine to fail to compile.**
 - Download the project from Github (see above).
 - Find the UnrealSDK.uproject file in the root folder of repository.
 - If you have multiple Unreal engine versions installed, right click on this file, select "Switch unreal engine version" option and select the one which you want to use with this plugin.
 - Right click on .uproject file again, choose "Generate Visual Studio project files". After this, you'll find UnrealSDK.sln file right next to the .uproject file.
 - Open the .sln file (e.g. by double-clicking on it), you'll have Visual Studio started, with the solution file loaded.
-- Now, you may build the project, or run it directly from the Visual Studio.
+- Now, you may build the project, or run it directly from Visual Studio.
+
+![Section Divider](https://github.com/looking-glass/unreal/docs/docs-divider-gradient-stroke.png)
 
 ## How to use pre-built version of the plugin
 
-- As a pre-requisite, you should have an existing project for Unreal engine.
+- As a pre-requisite, you should have an existing project for Unreal Engine.
 - Download the latest release for your Unreal engine version [here](https://github.com/Looking-Glass/Unreal/releases)
 - Create Plugins folder in your project (it may already exist if you have any project-level plugins).
-- Create a LookingGlass folder inside of Plugins. Actual folder name doesn't matter.
+- Create a LookingGlass folder inside of Plugins. 
 - Unzip the archive file with precompiled plugin into this folder.
-- Now you may run your project. The LookingGlass plugin should be automatically enabled, unless if it was explicitly disabled before. You may see the "LookingGlass" button on the editor's toolbar.
+- Now you may run your project. The Looking Glass plugin should be automatically enabled, unless if it was explicitly disabled before. You may see the "Looking Glass" button on the editor's toolbar.
 - If the button didn't appear, go to the menu, Edit | Plugins | Project | Light Field Display | LookingGlass, and check the "Enabled" option. The engine will prompt to restart the editor after that.
+
+![Section Divider](https://github.com/looking-glass/unreal/docs/docs-divider-gradient-stroke.png)
 
 ## How to package the plugin
 
