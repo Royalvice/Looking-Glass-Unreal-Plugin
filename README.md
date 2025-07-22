@@ -8,10 +8,10 @@ For more information on how to use the plugin, check out our [docs site](https:/
 
 ## Obtaining the source code
 
-`git clone git@github.com:Looking-Glass/Unreal.git`
-- `cd Unreal`
+`git clone git@github.com:Looking-Glass/Looking-Glass-Unreal-Plugin.git`
+- `cd Looking-Glass-Unreal-Plugin`
 
-Alternatively you may get the snapshot of the repository using downloading of zip file from Github instead of using `git clone`.
+Alternatively you may get the snapshot of the repository using downloading of zip file from GitHub instead of using `git clone`.
 
 ![](https://github.com/Looking-Glass/Unreal/blob/main/docs/docs-divider-gradient-stroke.png)
 
@@ -28,19 +28,19 @@ Alternatively you may get the snapshot of the repository using downloading of zi
 - Open the .sln file (e.g. by double-clicking on it), you'll have Visual Studio started, with the solution file loaded.
 - Now, you may build the project, or run it directly from Visual Studio.
 
-![](https://github.com/Looking-Glass/Unreal/blob/main/docs/docs-divider-gradient-stroke.png)
+![](https://github.com/Looking-Glass/Looking-Glass-Unreal-Plugin/blob/main/docs/docs-divider-gradient-stroke.png)
 
 ## How to use pre-built version of the plugin
 
 - As a pre-requisite, you should have an existing project for Unreal Engine.
-- Download the latest release for your Unreal engine version [here](https://github.com/Looking-Glass/Unreal/releases)
+- Download the latest release for your Unreal engine version [here](https://github.com/Looking-Glass/Looking-Glass-Unreal-Plugin/releases)
 - Create Plugins folder in your project (it may already exist if you have any project-level plugins).
 - Create a LookingGlass folder inside of Plugins. 
 - Unzip the archive file with precompiled plugin into this folder.
 - Now you may run your project. The Looking Glass plugin should be automatically enabled, unless if it was explicitly disabled before. You may see the "Looking Glass" button on the editor's toolbar.
 - If the button didn't appear, go to the menu, Edit | Plugins | Project | Light Field Display | LookingGlass, and check the "Enabled" option. The engine will prompt to restart the editor after that.
 
-![](https://github.com/Looking-Glass/Unreal/blob/main/docs/docs-divider-gradient-stroke.png)
+![](https://github.com/Looking-Glass/Looking-Glass-Unreal-Plugin/blob/main/docs/docs-divider-gradient-stroke.png)
 
 ## How to package the plugin
 
