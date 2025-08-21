@@ -238,6 +238,20 @@ struct FLookingGlassScreenshotSettings
 };
 
 
+UENUM(BlueprintType, meta = (ScriptName = "LookingGlassQuiltOrder"))
+enum class ELookingGlassQuiltOrder : uint8
+{
+	// Row-major from top-left to bottom-right
+	TopLeft_To_BottomRight	UMETA(DisplayName = "Top-Left -> Bottom-Right"),
+	// Legacy behavior: bottom-left to top-right
+	BottomLeft_To_TopRight	UMETA(DisplayName = "Bottom-Left -> Top-Right"),
+	// Row-major from top-right to bottom-left
+	TopRight_To_BottomLeft	UMETA(DisplayName = "Top-Right -> Bottom-Left"),
+	// Row-major from bottom-right to top-left
+	BottomRight_To_TopLeft	UMETA(DisplayName = "Bottom-Right -> Top-Left")
+};
+
+
 /**
  * @struct	FLookingGlassRenderingSettings
  *
@@ -266,6 +280,10 @@ struct FLookingGlassRenderingSettings
 	// If false, legacy order is used: bottom-left to top-right.
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Rendering")
 	bool bTopLeftFirstQuiltOrder = false;
+
+	// Quilt tile filling order (preferred over the legacy boolean above)
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Rendering")
+	ELookingGlassQuiltOrder QuiltOrder = ELookingGlassQuiltOrder::BottomLeft_To_TopRight; // default to legacy
 
 	void UpdateVsync() const;
 };

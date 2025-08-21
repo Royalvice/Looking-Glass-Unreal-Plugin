@@ -27,24 +27,51 @@ void LookingGlass::CopyToQuiltShader_RenderThread(FRHICommandListImmediate& RHIC
     RHICmdList.BeginRenderPass(RPInfo, TEXT("CopyToQuiltShader_RenderThread"));
 
     // Set Viewport for tiling ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // Legacy order: first view at bottom-left, last view at top-right
-    // Optional order (bTopLeftFirstOrder): first view at top-left, last view at bottom-right
+    // Support four scanning orders for quilt tiles
     int32 X = 0;
     int32 Y = 0;
-    if (Context.bTopLeftFirstOrder)
+    switch (Context.QuiltOrder)
     {
-        // Row-major from top to bottom
-        int32 Row = Context.CurrentViewIndex / TilingValues.TilesX; // 0 is top row
-        int32 Col = Context.CurrentViewIndex % TilingValues.TilesX;
+    case ELookingGlassQuiltOrder::TopLeft_To_BottomRight:
+    {
+        // Row-major from top-left to bottom-right
+        const int32 Row = Context.CurrentViewIndex / TilingValues.TilesX; // 0 is top row
+        const int32 Col = Context.CurrentViewIndex % TilingValues.TilesX;
         X = Col * TilingValues.TileSizeX;
         Y = Row * TilingValues.TileSizeY;
+        break;
     }
-    else
+    case ELookingGlassQuiltOrder::BottomLeft_To_TopRight:
     {
-        // Original behavior: bottom-left to top-right
-        int32 RI = TilingValues.GetNumTiles() - Context.CurrentViewIndex - 1;
+        // Legacy behavior: bottom-left to top-right
+        const int32 RI = TilingValues.GetNumTiles() - Context.CurrentViewIndex - 1;
         X = (Context.CurrentViewIndex % TilingValues.TilesX) * TilingValues.TileSizeX;
         Y = (RI / TilingValues.TilesX) * TilingValues.TileSizeY;
+        break;
+    }
+    case ELookingGlassQuiltOrder::TopRight_To_BottomLeft:
+    {
+        // Row-major from top-right to bottom-left
+        const int32 Row = Context.CurrentViewIndex / TilingValues.TilesX; // 0 is top row
+        const int32 ColFromRight = Context.CurrentViewIndex % TilingValues.TilesX;
+        const int32 Col = (TilingValues.TilesX - 1) - ColFromRight;
+        X = Col * TilingValues.TileSizeX;
+        Y = Row * TilingValues.TileSizeY;
+        break;
+    }
+    case ELookingGlassQuiltOrder::BottomRight_To_TopLeft:
+    {
+        // Row-major from bottom-right to top-left
+        const int32 RowFromBottom = Context.CurrentViewIndex / TilingValues.TilesX;
+        const int32 Row = (TilingValues.TilesY - 1) - RowFromBottom;
+        const int32 ColFromRight = Context.CurrentViewIndex % TilingValues.TilesX;
+        const int32 Col = (TilingValues.TilesX - 1) - ColFromRight;
+        X = Col * TilingValues.TileSizeX;
+        Y = Row * TilingValues.TileSizeY;
+        break;
+    }
+    default:
+        break;
     }
 
     // The padding is necessary because the shader takes y from the opposite spot as this does
