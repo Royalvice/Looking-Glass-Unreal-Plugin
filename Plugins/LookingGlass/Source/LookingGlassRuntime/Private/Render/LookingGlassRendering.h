@@ -24,6 +24,9 @@ namespace LookingGlass
 		int32 ViewRows;
 		int32 ViewColumns;
 		FSceneCaptureViewInfo CaptureViewInfo;
+		// If true, tile ordering starts at top-left and ends at bottom-right.
+		// If false, the legacy behavior is used: start at bottom-left and end at top-right.
+		bool bTopLeftFirstOrder = false;
 	};
 
 	/**

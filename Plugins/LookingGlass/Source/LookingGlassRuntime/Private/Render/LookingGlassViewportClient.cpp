@@ -503,7 +503,8 @@ void FLookingGlassViewportClient::RenderToQuilt(ULookingGlassSceneCaptureCompone
 				RenderingConfig.GetViewInfoArr().Num(),
 				RenderingConfig.GetViewRows(),
 				RenderingConfig.GetViewColumns(),
-				RenderingConfig.GetViewInfoArr()[ViewIndex]
+				RenderingConfig.GetViewInfoArr()[ViewIndex],
+				GetDefault<ULookingGlassSettings>()->LookingGlassRenderingSettings.bTopLeftFirstQuiltOrder
 			};
 
 			ENQUEUE_RENDER_COMMAND(CopyToQuiltCommand)(

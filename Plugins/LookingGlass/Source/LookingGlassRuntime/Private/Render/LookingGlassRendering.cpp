@@ -27,9 +27,25 @@ void LookingGlass::CopyToQuiltShader_RenderThread(FRHICommandListImmediate& RHIC
     RHICmdList.BeginRenderPass(RPInfo, TEXT("CopyToQuiltShader_RenderThread"));
 
     // Set Viewport for tiling ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    int32 RI = TilingValues.GetNumTiles() - Context.CurrentViewIndex - 1;
-    int32 X = (Context.CurrentViewIndex % TilingValues.TilesX) * TilingValues.TileSizeX;
-    int32 Y = (RI / TilingValues.TilesX) * TilingValues.TileSizeY;
+    // Legacy order: first view at bottom-left, last view at top-right
+    // Optional order (bTopLeftFirstOrder): first view at top-left, last view at bottom-right
+    int32 X = 0;
+    int32 Y = 0;
+    if (Context.bTopLeftFirstOrder)
+    {
+        // Row-major from top to bottom
+        int32 Row = Context.CurrentViewIndex / TilingValues.TilesX; // 0 is top row
+        int32 Col = Context.CurrentViewIndex % TilingValues.TilesX;
+        X = Col * TilingValues.TileSizeX;
+        Y = Row * TilingValues.TileSizeY;
+    }
+    else
+    {
+        // Original behavior: bottom-left to top-right
+        int32 RI = TilingValues.GetNumTiles() - Context.CurrentViewIndex - 1;
+        X = (Context.CurrentViewIndex % TilingValues.TilesX) * TilingValues.TileSizeX;
+        Y = (RI / TilingValues.TilesX) * TilingValues.TileSizeY;
+    }
 
     // The padding is necessary because the shader takes y from the opposite spot as this does
     int32 PaddingY = TilingValues.QuiltH - TilingValues.TilesY * TilingValues.TileSizeY;
