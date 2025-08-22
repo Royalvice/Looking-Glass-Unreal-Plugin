@@ -276,11 +276,6 @@ struct FLookingGlassRenderingSettings
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Rendering")
 	bool bRender2D = false;
 
-	// If true, the quilt tiles are filled from top-left to bottom-right.
-	// If false, legacy order is used: bottom-left to top-right.
-	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Rendering")
-	bool bTopLeftFirstQuiltOrder = false;
-
 	// Quilt tile filling order (preferred over the legacy boolean above)
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Rendering")
 	ELookingGlassQuiltOrder QuiltOrder = ELookingGlassQuiltOrder::BottomLeft_To_TopRight; // default to legacy

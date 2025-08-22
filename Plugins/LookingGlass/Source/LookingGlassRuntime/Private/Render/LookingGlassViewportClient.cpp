@@ -496,10 +496,7 @@ void FLookingGlassViewportClient::RenderToQuilt(ULookingGlassSceneCaptureCompone
 			// Backward-compat: if enum is default legacy but old boolean is true, prefer TopLeft order
 			const FLookingGlassRenderingSettings& LGRenderingSettings = GetDefault<ULookingGlassSettings>()->LookingGlassRenderingSettings;
 			ELookingGlassQuiltOrder QuiltOrder = LGRenderingSettings.QuiltOrder;
-			if (QuiltOrder == ELookingGlassQuiltOrder::BottomLeft_To_TopRight && LGRenderingSettings.bTopLeftFirstQuiltOrder)
-			{
-				QuiltOrder = ELookingGlassQuiltOrder::TopLeft_To_BottomRight;
-			}
+			
 			LookingGlass::FCopyToQuiltRenderContext RenderContext =
 			{
 				InQuiltRT->GameThread_GetRenderTargetResource(),
