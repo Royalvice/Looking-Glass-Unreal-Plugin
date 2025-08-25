@@ -58,11 +58,19 @@ static void ReportError(const FString& Message)
 
 bool FLookingGlassBridge::Initialize()
 {
+	// 设置日志级别（使用正确的方法）
+	LogLookingGlassBridge.SetVerbosity(ELogVerbosity::Log);
+	
+	// 添加测试日志
+	UE_LOG(LogTemp, Log, TEXT("LookingGlassBridge::Initialize() called"));
+	UE_LOG(LogLookingGlassBridge, Log, TEXT("LookingGlassBridge::Initialize() called"));
+	
 	// Load the Bridge
 	BridgeController = new ControllerWithCalibrationTemplates();
 	if (!BridgeController->Initialize(TEXT("UnrealEnginePlugin")))
 	{
-		ReportError(TEXT("Bridge initialization failed"));
+		UE_LOG(LogLookingGlassBridge, Error, TEXT("%s"), TEXT("Bridge initialization failed"));
+		UE_LOG(LogLookingGlassBridge, Log, TEXT("%s"), TEXT("Bridge initialization failed"));
 		delete BridgeController;
 		return false;
 	}

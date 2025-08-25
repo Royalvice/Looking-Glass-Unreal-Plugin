@@ -904,13 +904,20 @@ void FLookingGlassRenderingConfig::Init(UObject* Parent, uint32 InMinTextureInde
 	if (NumViews > 0)
 	{
 		static int32 GMaxTextureDimensionsLocal = (int32)GMaxTextureDimensions;
+		UE_LOG(LookingGlassLogGame, Verbose, TEXT("GMaxTextureDimensionsLocal: %d"), GMaxTextureDimensionsLocal);
 		check(InViewSize.X < GMaxTextureDimensionsLocal);
 		check(InViewSize.Y < GMaxTextureDimensionsLocal);
-		int32 TextureSizeX = float(InViewSize.X * NumViews);
+		int32 TextureSizeX = InViewSize.X * NumViews;
 		ViewRows = 1;
-		if ((TextureSizeX - GMaxTextureDimensionsLocal) > 0)
+		if (TextureSizeX > GMaxTextureDimensionsLocal)
 		{
-			ViewRows = FMath::RoundFromZero(float(NumViews) / float(GMaxTextureDimensionsLocal / InViewSize.X));
+			// 计算每行能放多少个视图
+			int32 ViewsPerRow = GMaxTextureDimensionsLocal / InViewSize.X;
+			if (ViewsPerRow > 0)
+			{
+				// 计算需要多少行来容纳所有视图
+				ViewRows = FMath::CeilToInt(float(NumViews) / float(ViewsPerRow));
+			}
 		}
 
 		ViewColumns = FMath::RoundFromZero(float(NumViews) / float(ViewRows));
