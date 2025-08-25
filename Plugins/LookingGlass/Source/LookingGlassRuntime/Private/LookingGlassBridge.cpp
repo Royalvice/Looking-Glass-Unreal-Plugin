@@ -33,6 +33,9 @@ THIRD_PARTY_INCLUDES_END
 #undef GetClassName
 #undef max
 
+// 编译开关：设置为1禁用LookingGlass设备检测
+#define DISABLE_LOOKINGGLASS_DEVICE_DETECTION 1
+
 #define BRIDGE_VERSION_MAJOR	2
 #define BRIDGE_VERSION_MINOR	4
 #define BRIDGE_VERSION_BUILD	11
@@ -146,6 +149,10 @@ void FLookingGlassBridge::ReadDisplays()
 {
 	Displays.Empty();
 
+#if DISABLE_LOOKINGGLASS_DEVICE_DETECTION
+	// 通过编译开关禁用设备检测
+	return;
+#else
 	if (BridgeController == nullptr)
 	{
 		return;
@@ -197,6 +204,7 @@ void FLookingGlassBridge::ReadDisplays()
 
 		BridgeController->GetDisplayAspectForDisplay(DisplayId, &Display.Aspect);
 	}
+#endif
 }
 
 void FLookingGlassBridge::Shutdown()

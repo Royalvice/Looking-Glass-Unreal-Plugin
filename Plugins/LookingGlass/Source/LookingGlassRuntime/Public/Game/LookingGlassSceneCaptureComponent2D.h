@@ -196,6 +196,7 @@ public:
 	const FLookingGlassTilingQuality& GetTilingValues() { return TilingValues; }
 
 	float GetAspectRatio() const;
+	float GetViewCone() const;
 
 	UTextureRenderTarget2D* GetTextureTarget2DRendering() const { return TextureTarget2DRendering; }
 

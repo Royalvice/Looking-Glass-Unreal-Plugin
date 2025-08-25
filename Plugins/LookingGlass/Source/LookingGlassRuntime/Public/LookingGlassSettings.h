@@ -74,6 +74,10 @@ struct FLookingGlassTilingQuality
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "TilingSettings", meta = (HideEditConditionToggle, EditCondition = "bTilingEditable", UIMin = "0.05", UIMax = "20"))
 	float Aspect = 0.5625f;
 
+	// View cone angle in degrees. Controls the field of view for the holographic display
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "TilingSettings", meta = (HideEditConditionToggle, EditCondition = "bTilingEditable", ClampMin = "1", ClampMax = "180", UIMin = "1", UIMax = "180"))
+	float ViewCone = 54.0f;
+
 	// Hidden property used to enable/disable editing of other properties
 	UPROPERTY()
 	bool bTilingEditable = false;
@@ -91,12 +95,13 @@ struct FLookingGlassTilingQuality
 
 	FLookingGlassTilingQuality() {}
 
-	FLookingGlassTilingQuality(FString InName, int InTilesX, int InTilesY, int InQuiltW, int InQuiltH, float InAspect, bool InEditable = false)
+	FLookingGlassTilingQuality(FString InName, int InTilesX, int InTilesY, int InQuiltW, int InQuiltH, float InAspect, float InViewCone = 54.0f, bool InEditable = false)
 		: TilesX(InTilesX)
 		, TilesY(InTilesY)
 		, QuiltW(InQuiltW)
 		, QuiltH(InQuiltH)
 		, Aspect(InAspect)
+		, ViewCone(InViewCone)
 		, bTilingEditable(InEditable)
 		, Name(InName)
 	{
@@ -346,43 +351,43 @@ public:
 	FLookingGlassScreenshotSettings LookingGlassScreenshot2DSettings = FLookingGlassScreenshotSettings("Screenshot2D", EKeys::F8, 1280, 720);
 
     UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - Portrait"))
-    FLookingGlassTilingQuality PortraitSettings = FLookingGlassTilingQuality("Portrait", 8, 6, 3360, 3360, 0.75f);
+    FLookingGlassTilingQuality PortraitSettings = FLookingGlassTilingQuality("Portrait", 8, 6, 3360, 3360, 0.75f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - 16\" (4K)"))
-	FLookingGlassTilingQuality _16In_Settings = FLookingGlassTilingQuality("4K Res", 5, 9, 4096, 4096, 1.77777f);
+	FLookingGlassTilingQuality _16In_Settings = FLookingGlassTilingQuality("4K Res", 5, 9, 4096, 4096, 1.77777f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - 32\" (8K)"))
-	FLookingGlassTilingQuality _32In_Settings = FLookingGlassTilingQuality("8K Res", 5, 9, 8192, 8192, 1.77777f);
+	FLookingGlassTilingQuality _32In_Settings = FLookingGlassTilingQuality("8K Res", 5, 9, 8192, 8192, 1.77777f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - 65\""))
-	FLookingGlassTilingQuality _65In_Settings = FLookingGlassTilingQuality("65 Inch", 8, 9, 8192, 8192, 1.77777f);
+	FLookingGlassTilingQuality _65In_Settings = FLookingGlassTilingQuality("65 Inch", 8, 9, 8192, 8192, 1.77777f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - Prototype"))
-	FLookingGlassTilingQuality _Prototype_Settings = FLookingGlassTilingQuality("Prototype", 5, 9, 4096, 4096, 1.77777f);
+	FLookingGlassTilingQuality _Prototype_Settings = FLookingGlassTilingQuality("Prototype", 5, 9, 4096, 4096, 1.77777f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - Go Portrait"))
-	FLookingGlassTilingQuality _GoPortrait_Settings = FLookingGlassTilingQuality("Go Portrait", 11, 6, 4092, 4092, 0.5625f);
+	FLookingGlassTilingQuality _GoPortrait_Settings = FLookingGlassTilingQuality("Go Portrait", 11, 6, 4092, 4092, 0.5625f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - Kiosk"))
-	FLookingGlassTilingQuality _Kiosk_Settings = FLookingGlassTilingQuality("Kiosk", 11, 6, 4096, 4096, 0.5625f);
+	FLookingGlassTilingQuality _Kiosk_Settings = FLookingGlassTilingQuality("Kiosk", 11, 6, 4096, 4096, 0.5625f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - 16\" Portrait"))
-	FLookingGlassTilingQuality _16In_Portrait_Settings = FLookingGlassTilingQuality("16 Inch Portrait", 11, 6, 5995, 6000, 0.5625f);
+	FLookingGlassTilingQuality _16In_Portrait_Settings = FLookingGlassTilingQuality("16 Inch Portrait", 11, 6, 5995, 6000, 0.5625f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - 16\" Landscape"))
-	FLookingGlassTilingQuality _16In_Landscape_Settings = FLookingGlassTilingQuality("16 Inch Landscape", 7, 7, 5999, 5999, 1.77777f);
+	FLookingGlassTilingQuality _16In_Landscape_Settings = FLookingGlassTilingQuality("16 Inch Landscape", 7, 7, 5999, 5999, 1.77777f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - 32\" Portrait"))
-	FLookingGlassTilingQuality _32In_Portrait_Settings = FLookingGlassTilingQuality("32 Inch Portrait", 11, 6, 8184, 8184, 0.5625f);
+	FLookingGlassTilingQuality _32In_Portrait_Settings = FLookingGlassTilingQuality("32 Inch Portrait", 11, 6, 8184, 8184, 0.5625f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - 32\" Landscape"))
-	FLookingGlassTilingQuality _32In_Landscape_Settings = FLookingGlassTilingQuality("32 Inch Landscape", 7, 7, 8190, 8190, 1.77777f);
+	FLookingGlassTilingQuality _32In_Landscape_Settings = FLookingGlassTilingQuality("32 Inch Landscape", 7, 7, 8190, 8190, 1.77777f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "LookingGlass - 8.9\" (Legacy)"))
-	FLookingGlassTilingQuality _8_9inLegacy_Settings = FLookingGlassTilingQuality("Extra Low", 5, 9, 4096, 4096, 1.6f);
+	FLookingGlassTilingQuality _8_9inLegacy_Settings = FLookingGlassTilingQuality("Extra Low", 5, 9, 4096, 4096, 1.6f, 54.0f);
 
 	UPROPERTY(BlueprintReadOnly, GlobalConfig, EditAnywhere, Category = "LookingGlass|Tiling Settings", Meta = (DisplayName = "Custom"))
-	FLookingGlassTilingQuality CustomSettings = FLookingGlassTilingQuality("Custom", 11, 6, 4092, 4092, 0.5625f, true);
+	FLookingGlassTilingQuality CustomSettings = FLookingGlassTilingQuality("Custom", 11, 6, 4092, 4092, 0.5625f, 54.0f, true);
 
 	UPROPERTY(BlueprintReadOnly, GlobalConfig, EditAnywhere, Category = "LookingGlass", Meta = (ShowOnlyInnerProperties))
 	FLookingGlassRenderingSettings LookingGlassRenderingSettings;

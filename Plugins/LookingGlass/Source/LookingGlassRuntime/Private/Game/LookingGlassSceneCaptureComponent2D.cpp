@@ -317,6 +317,12 @@ void ULookingGlassSceneCaptureComponent2D::PostEditChangeProperty(struct FProper
 			// Reset our render textures and configuration after it
 			RebuildRenderConfigs();
 		}
+		else if (PropertyName == GET_MEMBER_NAME_CHECKED(FLookingGlassTilingQuality, ViewCone))
+		{
+			// Force a refresh of the rendering when ViewCone is changed
+			OnLookingGlassObjectChanged.ExecuteIfBound(this);
+		}
+
 
 		// Check if Game is running
 		if (GetWorld() && GetWorld()->IsGameWorld())
@@ -447,6 +453,27 @@ float ULookingGlassSceneCaptureComponent2D::GetAspectRatio() const
 	return Aspect;
 }
 
+float ULookingGlassSceneCaptureComponent2D::GetViewCone() const
+{
+	float ViewCone = 0.0f;
+
+	if (TilingValues.ViewCone == 0.0f)
+	{
+		// Get ViewCone from device calibration
+		const FLGDeviceCalibration& Calibration = ILookingGlassRuntime::Get().GetCurrentCalibration();
+		ViewCone = Calibration.ViewCone;
+	}
+	else
+	{
+		ViewCone = TilingValues.ViewCone;
+	}
+
+	// Clamp the value to something reasonable
+	ViewCone = FMath::Clamp(ViewCone, 1.0f, 180.0f);
+
+	return ViewCone;
+}
+
 float ULookingGlassSceneCaptureComponent2D::GetCameraDistance() const
 {
 	return Size / FMath::Tan(FMath::DegreesToRadians(FOV * 0.5f));
@@ -539,6 +566,8 @@ void ULookingGlassSceneCaptureComponent2D::UpdateTilingProperties()
 		const ULookingGlassSettings* LookingGlassSettings = GetDefault<ULookingGlassSettings>();
 		TilingValues = LookingGlassSettings->GetTilingQualityFor(TilingSettings);
 	}
+
+
 
 	// Reset our render textures and configuration after it
 	RebuildRenderConfigs();
@@ -708,9 +737,8 @@ void ULookingGlassSceneCaptureComponent2D::RenderViews()
 	// Setup all render targets
 	float CamDistance = GetCameraDistance();
 
-	// Get the ViewCone value for current device
-	const FLGDeviceCalibration& Calibration = ILookingGlassRuntime::Get().GetCurrentCalibration();
-	float ViewCone = Calibration.ViewCone;
+	// Get the ViewCone value using the same pattern as Aspect
+	float ViewCone = GetViewCone();
 	float ViewConeSweep = CamDistance * FMath::Tan(FMath::DegreesToRadians(ViewCone));
 
 	int32 NumTiles = TilingValues.GetNumTiles();

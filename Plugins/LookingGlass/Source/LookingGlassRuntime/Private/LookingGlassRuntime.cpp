@@ -55,6 +55,14 @@ void FLookingGlassRuntimeModule::StartupModule()
 			// Init all settings
 			GetDefault<ULookingGlassSettings>()->PostEngineInit();
 
+			// Update ViewCone from Tiling Settings now that engine is initialized
+			const ULookingGlassSettings* LookingGlassSettings = GetDefault<ULookingGlassSettings>();
+			if (LookingGlassSettings)
+			{
+				FLookingGlassTilingQuality TilingValues = LookingGlassSettings->GetTilingQualityFor(ELookingGlassQualitySettings::Q_GoPortrait);
+				CurrentCalibration.ViewCone = TilingValues.ViewCone;
+			}
+
 			// Initialize Bridge here - just to let error popups to appear with no fuss.
 			Bridge.Initialize();
 
@@ -239,8 +247,11 @@ void FLookingGlassRuntimeModule::StartPlayer(ELookingGlassModeType LookingGlassM
 		{
 			MakeDefaultCalibration();
 		}
+		
 		// Update tiling settings, mainly needed for "Automatic" preset
 		ULookingGlassSceneCaptureComponent2D::UpdateTilingPropertiesForAllComponents();
+		
+
 
 		LookingGlassWindow = SNew(SWindow)
 			.Type(EWindowType::GameWindow)
@@ -423,7 +434,7 @@ void FLookingGlassRuntimeModule::MakeDefaultCalibration()
 	CurrentCalibration.Width = 1440;
 	CurrentCalibration.Height = 2560;
 	CurrentCalibration.Aspect = 0.5625f;
-	CurrentCalibration.ViewCone = 54;
+	CurrentCalibration.ViewCone = 54.0f;
 }
 
 void FLookingGlassRuntimeModule::StopPlayer()
